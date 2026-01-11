@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+  xhs-mcp:
+    build: .
+    restart: always
+    ports:
+      - 9431:9431
+    env_file:
+      - .env
+    environment:
+      - DATA_DIR=/app/data
+      - LOG_DIR=/app/logs
+    volumes:
+      - ./logs:/app/logs
+      - ./data/cookies.json:/app/data/cookies.json
+      # - ./data:/app/data  <-- 注释掉这行，避免挂载整个 data 目录导致 chrome-profile 版本冲突
+      # 如果您需要保存二维码或验证码图片，可以单独挂载这两个目录：
+      - ./data/qr:/app/data/qr
+      - ./data/captchas:/app/data/captchas

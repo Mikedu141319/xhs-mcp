@@ -1,0 +1,15 @@
+2026-01-05 21:54:11.878 | INFO     | __main__:<module>:17 - Logging initialized at /app/logs
+2026-01-05 21:55:59.025 | INFO     | __main__:get_login_qr:48 - get_login_qr called
+2026-01-05 21:55:59.062 | INFO     | src.utils.browser_guard:_launch:104 - Launching managed Chrome instance: google-chrome --remote-debugging-port=9222 --remote-debugging-address=127.0.0.1 --user-data-dir=/app/data/chrome-profile --no-first-run --no-default-browser-check --headless=new --window-size=1920,1080 --remote-allow-origins=* --disable-dev-shm-usage --no-sandbox --disable-gpu --disable-software-rasterizer
+2026-01-05 21:55:59.524 | WARNING  | src.utils.cookie_storage:load_cookies:63 - Failed to load cookies from /app/data/cookies.json: [Errno 21] Is a directory: '/app/data/cookies.json'
+2026-01-05 21:55:59.569 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target New Tab (BFE2E803F23FF0568AE2D9879A70A09F)
+2026-01-05 21:55:59.604 | INFO     | src.services.login_service:ensure_login_status:209 - Navigating Chrome target to https://www.xiaohongshu.com/explore
+2026-01-05 21:55:59.622 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target New Tab (BFE2E803F23FF0568AE2D9879A70A09F)
+2026-01-05 21:55:59.797 | INFO     | src.services.login_service:ensure_login_status:212 - Waiting for ready state...
+2026-01-05 21:55:59.826 | INFO     | src.services.login_service:ensure_login_status:216 - Executing DOM probe...
+2026-01-05 21:57:29.407 | INFO     | __main__:get_login_qr:48 - get_login_qr called
+2026-01-05 21:57:29.422 | WARNING  | src.utils.cookie_storage:load_cookies:63 - Failed to load cookies from /app/data/cookies.json: [Errno 21] Is a directory: '/app/data/cookies.json'
+2026-01-05 21:57:29.441 | INFO     | src.services.login_service:ensure_login_status:209 - Navigating Chrome target to https://www.xiaohongshu.com/explore
+2026-01-05 21:57:29.661 | INFO     | src.services.login_service:ensure_login_status:212 - Waiting for ready state...
+2026-01-05 21:57:31.003 | INFO     | src.services.login_service:ensure_login_status:216 - Executing DOM probe...
+2026-01-05 21:57:31.030 | INFO     | src.utils.qr_storage:save_qr_image_from_base64:40 - QR image saved to /app/data/qr/qr_1767650251.png

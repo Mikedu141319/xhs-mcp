@@ -1,0 +1,9 @@
+2026-01-05 22:04:27.322 | INFO     | __main__:<module>:17 - Logging initialized at /app/logs
+2026-01-05 22:05:14.426 | INFO     | __main__:get_login_qr:48 - get_login_qr called
+2026-01-05 22:05:14.450 | INFO     | src.utils.browser_guard:_launch:104 - Launching managed Chrome instance: google-chrome --remote-debugging-port=9222 --remote-debugging-address=127.0.0.1 --user-data-dir=/app/data/chrome-profile --no-first-run --no-default-browser-check --headless=new --window-size=1920,1080 --remote-allow-origins=* --disable-dev-shm-usage --no-sandbox --disable-gpu --disable-software-rasterizer
+2026-01-05 22:05:14.883 | WARNING  | src.utils.cookie_storage:load_cookies:63 - Failed to load cookies from /app/data/cookies.json: [Errno 21] Is a directory: '/app/data/cookies.json'
+2026-01-05 22:05:14.900 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target New Tab (7C9BE5DA02124A2DFCF6FA2AFA359AF2)
+2026-01-05 22:05:14.907 | INFO     | src.services.login_service:ensure_login_status:246 - Navigating Chrome target to https://www.xiaohongshu.com/explore
+2026-01-05 22:05:14.924 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target New Tab (7C9BE5DA02124A2DFCF6FA2AFA359AF2)
+2026-01-05 22:05:15.117 | INFO     | src.services.login_service:ensure_login_status:249 - Waiting for ready state...
+2026-01-05 22:05:16.516 | INFO     | src.services.login_service:ensure_login_status:253 - Executing DOM probe...

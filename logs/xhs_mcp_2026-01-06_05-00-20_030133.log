@@ -1,0 +1,88 @@
+2026-01-06 05:00:20.045 | INFO     | __main__:<module>:17 - Logging initialized at /app/logs
+2026-01-06 05:01:05.989 | INFO     | __main__:get_login_qr:48 - get_login_qr called
+2026-01-06 05:01:06.027 | INFO     | src.utils.browser_guard:_launch:104 - Launching managed Chrome instance: google-chrome --remote-debugging-port=9222 --remote-debugging-address=127.0.0.1 --user-data-dir=/app/data/chrome-profile --no-first-run --no-default-browser-check --headless=new --window-size=1920,1080 --remote-allow-origins=* --disable-dev-shm-usage --no-sandbox --disable-gpu --disable-software-rasterizer
+2026-01-06 05:01:06.599 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target New Tab (83072B4FE912345C0C150E8DA34C3598)
+2026-01-06 05:01:06.647 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target New Tab (83072B4FE912345C0C150E8DA34C3598)
+2026-01-06 05:01:06.702 | INFO     | src.services.login_service:ensure_login_status:246 - Navigating Chrome target to https://www.xiaohongshu.com/explore
+2026-01-06 05:01:06.724 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target New Tab (83072B4FE912345C0C150E8DA34C3598)
+2026-01-06 05:01:07.028 | INFO     | src.services.login_service:ensure_login_status:249 - Waiting for ready state...
+2026-01-06 05:01:08.953 | INFO     | src.services.login_service:ensure_login_status:253 - Executing DOM probe...
+2026-01-06 05:08:50.874 | INFO     | __main__:auto_execute:254 - auto_execute called keyword=提升认知 note_limit=3
+2026-01-06 05:08:50.944 | INFO     | src.services.login_service:ensure_login_status:246 - Navigating Chrome target to https://www.xiaohongshu.com/explore
+2026-01-06 05:08:51.234 | INFO     | src.services.login_service:ensure_login_status:249 - Waiting for ready state...
+2026-01-06 05:08:54.207 | INFO     | src.services.login_service:ensure_login_status:253 - Executing DOM probe...
+2026-01-06 05:08:54.246 | INFO     | src.utils.cookie_storage:persist_cookies:38 - Persisted 14 cookies to /app/data/cookies.json
+2026-01-06 05:09:10.249 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 3119D09CC46A93544A6693904925883E
+2026-01-06 05:09:10.381 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 131.1577
+2026-01-06 05:09:11.889 | INFO     | src.services.note_service:_build_note_model:1009 - Payload keys for 688306780000000017034ece: ['xsecToken', 'shareInfo', 'noteId', 'type', 'user', 'imageList', 'time', 'lastUpdateTime', 'title', 'desc', 'interactInfo', 'tagList', 'atUserList']
+2026-01-06 05:09:11.889 | INFO     | src.services.note_service:_collect_comments:802 - Scrolling to load comments for 688306780000000017034ece (using JS scrollBy)...
+2026-01-06 05:09:14.676 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request C1E09239CA6DB13197C7D2B137A371BA
+2026-01-06 05:09:14.857 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 131.1764
+2026-01-06 05:09:18.036 | INFO     | src.services.note_service:_collect_comments:880 - Extracted 40 comments from DOM as fallback
+2026-01-06 05:09:18.037 | INFO     | src.services.note_service:collect_note_details:444 - Returned from _collect_comments with 27 comments
+2026-01-06 05:09:18.037 | INFO     | src.services.note_service:collect_note_details:470 - Appended note 688306780000000017034ece to notes list. Total notes: 1
+2026-01-06 05:09:27.630 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request AAB8830549F4B8CAB8E08AD684AAA4E8
+2026-01-06 05:09:27.848 | INFO     | __main__:auto_execute:254 - auto_execute called keyword=提升认知 note_limit=3
+2026-01-06 05:09:28.007 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 131.1902
+2026-01-06 05:09:28.649 | INFO     | src.services.login_service:ensure_login_status:246 - Navigating Chrome target to https://www.xiaohongshu.com/explore
+2026-01-06 05:09:28.928 | INFO     | src.services.login_service:ensure_login_status:249 - Waiting for ready state...
+2026-01-06 05:09:28.949 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target 小时候不懂，原来百家讲坛是真的教东西！ - 小红书 (83072B4FE912345C0C150E8DA34C3598)
+2026-01-06 05:09:32.898 | INFO     | src.services.login_service:ensure_login_status:253 - Executing DOM probe...
+2026-01-06 05:09:32.999 | INFO     | src.utils.cookie_storage:persist_cookies:38 - Persisted 14 cookies to /app/data/cookies.json
+2026-01-06 05:09:43.690 | WARNING  | src.services.note_service:_ensure_note_page:712 - SPA navigation failed for 690c4605000000000301f639, forcing hard navigation.
+2026-01-06 05:09:46.778 | ERROR    | src.services.search_service:run_search:356 - Chrome DevTools websocket error while searching: option_not_found_半年内
+2026-01-06 05:09:46.878 | WARNING  | src.services.automation_service:run_auto_workflow:66 - Search stage failed, attempting login refresh: Chrome websocket 连接失败，请检查 9222 端口状态。
+2026-01-06 05:09:48.156 | INFO     | src.services.login_service:ensure_login_status:246 - Navigating Chrome target to https://www.xiaohongshu.com/explore
+2026-01-06 05:09:48.389 | INFO     | src.services.login_service:ensure_login_status:249 - Waiting for ready state...
+2026-01-06 05:09:54.030 | INFO     | src.services.login_service:ensure_login_status:253 - Executing DOM probe...
+2026-01-06 05:09:54.096 | INFO     | src.utils.cookie_storage:persist_cookies:38 - Persisted 14 cookies to /app/data/cookies.json
+2026-01-06 05:10:20.764 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 131.4442
+2026-01-06 05:10:20.765 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 131.4442
+2026-01-06 05:10:22.814 | INFO     | src.services.note_service:_build_note_model:1009 - Payload keys for 688306780000000017034ece: ['xsecToken', 'desc', 'interactInfo', 'imageList', 'atUserList', 'time', 'lastUpdateTime', 'noteId', 'type', 'title', 'user', 'tagList', 'shareInfo']
+2026-01-06 05:10:22.815 | INFO     | src.services.note_service:_collect_comments:802 - Scrolling to load comments for 688306780000000017034ece (using JS scrollBy)...
+2026-01-06 05:10:25.841 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 131.4612
+2026-01-06 05:10:25.842 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 131.4612
+2026-01-06 05:10:29.465 | INFO     | src.services.note_service:_collect_comments:880 - Extracted 40 comments from DOM as fallback
+2026-01-06 05:10:29.465 | INFO     | src.services.note_service:collect_note_details:444 - Returned from _collect_comments with 27 comments
+2026-01-06 05:10:29.465 | INFO     | src.services.note_service:collect_note_details:470 - Appended note 688306780000000017034ece to notes list. Total notes: 1
+2026-01-06 05:10:36.057 | WARNING  | src.services.note_service:_extract_note_detail:697 - Note 690c4605000000000301f639 not ready in __INITIAL_STATE__ (reason={'ready': False, 'reason': 'note_missing'})
+2026-01-06 05:10:37.852 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 131.4748
+2026-01-06 05:10:37.853 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 131.4748
+2026-01-06 05:10:40.212 | INFO     | src.services.note_service:_build_note_model:1009 - Payload keys for 690c4605000000000301f639: ['xsecToken', 'noteId', 'user', 'imageList', 'tagList', 'time', 'lastUpdateTime', 'shareInfo', 'type', 'title', 'desc', 'interactInfo', 'atUserList']
+2026-01-06 05:10:40.212 | INFO     | src.services.note_service:_collect_comments:802 - Scrolling to load comments for 690c4605000000000301f639 (using JS scrollBy)...
+2026-01-06 05:10:45.752 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 72ADB4F1496764EC29E7D43DEC70FADB
+2026-01-06 05:10:45.771 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 72ADB4F1496764EC29E7D43DEC70FADB
+2026-01-06 05:10:46.993 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 131.4860
+2026-01-06 05:10:46.995 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 131.4860
+2026-01-06 05:10:49.068 | INFO     | src.services.note_service:_collect_comments:880 - Extracted 20 comments from DOM as fallback
+2026-01-06 05:10:49.068 | INFO     | src.services.note_service:collect_note_details:444 - Returned from _collect_comments with 20 comments
+2026-01-06 05:10:49.069 | INFO     | src.services.note_service:collect_note_details:470 - Appended note 690c4605000000000301f639 to notes list. Total notes: 2
+2026-01-06 05:10:49.182 | INFO     | src.services.note_service:_build_note_model:1009 - Payload keys for 6926db59000000000d039921: ['xsecToken', 'noteId', 'interactInfo', 'imageList', 'tagList', 'atUserList', 'shareInfo', 'type', 'title', 'desc', 'user', 'time', 'lastUpdateTime']
+2026-01-06 05:10:49.183 | INFO     | src.services.note_service:_collect_comments:802 - Scrolling to load comments for 6926db59000000000d039921 (using JS scrollBy)...
+2026-01-06 05:10:52.185 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 2B4F69538E0E2FFBE7A597FE13D07884
+2026-01-06 05:10:52.189 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 2B4F69538E0E2FFBE7A597FE13D07884
+2026-01-06 05:10:52.879 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 131.5006
+2026-01-06 05:10:52.881 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 131.5006
+2026-01-06 05:10:56.451 | INFO     | src.services.note_service:_collect_comments:880 - Extracted 0 comments from DOM as fallback
+2026-01-06 05:10:56.452 | INFO     | src.services.note_service:collect_note_details:444 - Returned from _collect_comments with 20 comments
+2026-01-06 05:10:56.452 | INFO     | src.services.note_service:collect_note_details:470 - Appended note 6926db59000000000d039921 to notes list. Total notes: 2
+2026-01-06 05:11:07.368 | WARNING  | src.services.note_service:_ensure_note_page:712 - SPA navigation failed for 6926db59000000000d039921, forcing hard navigation.
+2026-01-06 05:11:08.058 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 7689C666A818C36872EB7D3BEBA6393F
+2026-01-06 05:11:08.062 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 7689C666A818C36872EB7D3BEBA6393F
+2026-01-06 05:11:20.057 | WARNING  | src.services.note_service:_ensure_note_page:712 - SPA navigation failed for 694647e70000000019027c4d, forcing hard navigation.
+2026-01-06 05:11:43.039 | WARNING  | src.services.note_service:_extract_note_detail:697 - Note 6926db59000000000d039921 not ready in __INITIAL_STATE__ (reason={'ready': False, 'reason': 'note_missing'})
+2026-01-06 05:11:49.859 | WARNING  | src.services.note_service:_extract_note_detail:697 - Note 694647e70000000019027c4d not ready in __INITIAL_STATE__ (reason={'ready': False, 'reason': 'note_missing'})
+2026-01-06 05:12:01.018 | INFO     | src.services.note_service:_build_note_model:1009 - Payload keys for 694647e70000000019027c4d: ['xsecToken', 'user', 'tagList', 'atUserList', 'lastUpdateTime', 'type', 'title', 'desc', 'interactInfo', 'imageList', 'time', 'ipLocation', 'shareInfo', 'noteId']
+2026-01-06 05:12:01.018 | INFO     | src.services.note_service:_collect_comments:802 - Scrolling to load comments for 694647e70000000019027c4d (using JS scrollBy)...
+2026-01-06 05:12:04.255 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 145319EB151624AC573F5B11841AD02A
+2026-01-06 05:12:04.256 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 145319EB151624AC573F5B11841AD02A
+2026-01-06 05:12:04.725 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 131.5544
+2026-01-06 05:12:04.726 | INFO     | src.services.note_service:on_loading_finished:371 - Loading finished for comment request 131.5544
+2026-01-06 05:12:09.198 | INFO     | src.services.note_service:_collect_comments:880 - Extracted 0 comments from DOM as fallback
+2026-01-06 05:12:09.198 | INFO     | src.services.note_service:collect_note_details:444 - Returned from _collect_comments with 0 comments
+2026-01-06 05:12:09.199 | INFO     | src.services.note_service:collect_note_details:470 - Appended note 694647e70000000019027c4d to notes list. Total notes: 3
+2026-01-06 05:12:16.394 | WARNING  | src.services.note_service:_ensure_note_page:712 - SPA navigation failed for 693e2f14000000001b033525, forcing hard navigation.
+2026-01-06 05:12:16.816 | INFO     | __main__:auto_execute:258 - Cleaning response with keyword=提升认知
+2026-01-06 05:12:47.583 | WARNING  | src.services.note_service:_extract_note_detail:697 - Note 693e2f14000000001b033525 not ready in __INITIAL_STATE__ (reason={'ready': False, 'reason': 'note_missing'})
+2026-01-06 05:13:05.370 | WARNING  | src.services.note_service:_ensure_note_page:712 - SPA navigation failed for 695b85dc000000002103d1a6, forcing hard navigation.
+2026-01-06 05:13:38.047 | WARNING  | src.services.note_service:_extract_note_detail:697 - Note 695b85dc000000002103d1a6 not ready in __INITIAL_STATE__ (reason={'ready': False, 'reason': 'note_missing'})
