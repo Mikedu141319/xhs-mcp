@@ -270,11 +270,16 @@ class NoteDetailService:
             })
 
             # If search_url is provided (Browserless environment), navigate to it first
+            # If search_url is provided (Browserless environment), navigate to it first
             if search_url and "search_result" in search_url:
-                diagnostics.append(f"navigating_to_search_url={search_url}")
-                await client.navigate(search_url)
-                await asyncio.sleep(3)  # Wait for page to load
-                await client.wait_for_ready(timeout=15)
+                current_href = await self._safe_evaluate(client, "window.location.href")
+                if current_href and "search_result" in current_href:
+                     diagnostics.append(f"already_on_search_page_skipping_nav")
+                else:
+                    diagnostics.append(f"navigating_to_search_url={search_url}")
+                    await client.navigate(search_url)
+                    await asyncio.sleep(3)  # Wait for page to load
+                    await client.wait_for_ready(timeout=15)
 
             ready = await client.wait_for_ready()
             diagnostics.append(f"page_ready={ready}")
