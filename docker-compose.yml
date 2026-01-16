@@ -5,7 +5,6 @@ services:
     restart: always
     ports:
       - 9431:9431
-      - 9432:9432
     env_file:
       - .env
     environment:
