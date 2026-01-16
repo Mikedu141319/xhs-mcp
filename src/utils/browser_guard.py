@@ -83,6 +83,9 @@ class BrowserGuard:
             "--no-first-run",
             "--no-default-browser-check",
         ]
+        # Always force standard User-Agent to avoid Headless detection
+        args.append("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
+        
         if self.headless:
             args.append("--headless=new")
             args.append("--window-size=1920,1080")  # Ensure large viewport for scrolling logic
