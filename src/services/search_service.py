@@ -766,7 +766,7 @@ def _build_filter_button_click_script() -> str:
 _FILTER_PANEL_READY_EXPR = """
 (() => {
   const panel = document.querySelector('.filter-panel');
-  if (panel) {
+  if (panel && panel.offsetParent !== null) {
     window.__xhsFilterPanel = panel;
     return true;
   }
@@ -822,7 +822,7 @@ def _build_select_option_script(option_text: str) -> str:
 
   let panel = ensurePanel();
   if (!panel) {{
-    panel = document.body;
+    return {{ ok: false, reason: 'filter_panel_not_found_internal' }};
   }}
 
   const nodes = Array.from(panel.querySelectorAll('button, [role="button"], span'));
