@@ -433,6 +433,7 @@ async def health_check():
 if __name__ == "__main__":
     import uvicorn
     import threading
+    import time
     
     transport = os.getenv("FASTMCP_TRANSPORT", "stdio")
     host = os.getenv("FASTMCP_HOST", "127.0.0.1")
@@ -441,19 +442,43 @@ if __name__ == "__main__":
 
     uvicorn_config = {"ws": "websockets"}
     
+    # REST API 启动状态标志
+    rest_api_started = threading.Event()
+    
     # 启动 REST API 服务器（在单独线程中）
     def run_rest_api():
-        logger.info("Starting REST API server on port {}", rest_port)
-        uvicorn.run(rest_app, host="0.0.0.0", port=rest_port, log_level="info")
+        try:
+            logger.info("REST API thread started, binding to port {}", rest_port)
+            print(f"[REST API] Starting on port {rest_port}...", flush=True)
+            rest_api_started.set()  # 标记线程已启动
+            uvicorn.run(rest_app, host="0.0.0.0", port=rest_port, log_level="info")
+        except Exception as e:
+            logger.error("REST API failed to start: {}", str(e))
+            print(f"[REST API] ERROR: {e}", flush=True)
     
     if transport == "stdio":
         mcp.run(transport=transport)
     else:
-        # 同时启动 MCP 和 REST API
-        rest_thread = threading.Thread(target=run_rest_api, daemon=True)
+        # 先启动 REST API 线程
+        logger.info("Starting REST API thread...")
+        print("[Main] Starting REST API thread...", flush=True)
+        rest_thread = threading.Thread(target=run_rest_api, daemon=True, name="REST-API-Server")
         rest_thread.start()
-        logger.info("REST API available at http://{}:{}/api/auto_execute", host, rest_port)
         
+        # 等待 REST API 线程启动（最多等待 3 秒）
+        if rest_api_started.wait(timeout=3.0):
+            logger.info("REST API thread confirmed started")
+            print("[Main] REST API thread confirmed started", flush=True)
+        else:
+            logger.warning("REST API thread start not confirmed within timeout")
+            print("[Main] WARNING: REST API thread start not confirmed", flush=True)
+        
+        # 额外等待让 uvicorn 有时间绑定端口
+        time.sleep(1)
+        logger.info("REST API available at http://0.0.0.0:{}/api/auto_execute", rest_port)
+        print(f"[Main] REST API should be available at http://0.0.0.0:{rest_port}/api/auto_execute", flush=True)
+        
+        # 启动 MCP 服务器（主线程）
         mcp.run(
             transport=transport,
             host=host,
