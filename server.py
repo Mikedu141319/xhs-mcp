@@ -336,8 +336,8 @@ async def auto_execute(
 # REST API Layer (integrated with FastMCP HTTP server)
 # =============================================================================
 
-from fastapi import Request
-from fastapi.responses import JSONResponse
+from starlette.requests import Request
+from starlette.responses import JSONResponse
 from pydantic import BaseModel
 
 # REST API 请求模型
