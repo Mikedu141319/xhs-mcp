@@ -17,3 +17,17 @@ services:
       # 如果您需要保存二维码或验证码图片，可以单独挂载这两个目录：
       - ./data/qr:/app/data/qr
       - ./data/captchas:/app/data/captchas
+  
+  n8n:
+    image: n8nio/n8n:latest
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - GENERIC_TIMEZONE=Asia/Shanghai
+      - TZ=Asia/Shanghai
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:
