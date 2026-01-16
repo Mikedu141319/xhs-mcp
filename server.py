@@ -333,11 +333,11 @@ async def auto_execute(
 
 
 # =============================================================================
-# REST API Layer (integrated with FastMCP HTTP server)
+# REST API Layer (FastAPI with MCP mounted)
 # =============================================================================
 
-from starlette.requests import Request
-from starlette.responses import JSONResponse
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 # REST API 请求模型
@@ -355,90 +355,107 @@ class AutoExecuteRequest(BaseModel):
 
 
 # =============================================================================
-# 使用 FastMCP 的 custom_routes 添加 REST API 端点
+# 创建主 FastAPI 应用（包含 REST API 端点）
 # =============================================================================
 
-@mcp.custom_route("/api/health", methods=["GET"])
-async def health_check(request: Request) -> JSONResponse:
-    """健康检查端点 - 集成到 FastMCP HTTP 服务器"""
-    return JSONResponse({"status": "ok", "service": "3K RedNote MCP REST API"})
+# 获取 MCP 的 ASGI 应用
+mcp_app = mcp.http_app(path="/mcp")
+
+# 创建主 FastAPI 应用，使用 MCP 的 lifespan
+app = FastAPI(
+    title="3K RedNote MCP Server",
+    description="MCP server with REST API for n8n integration",
+    version="1.0.0",
+    lifespan=mcp_app.lifespan,
+)
+
+# 添加 CORS 支持
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# 挂载 MCP 到 /mcp 路径
+app.mount("/mcp", mcp_app)
 
 
-@mcp.custom_route("/api/auto_execute", methods=["POST"])
-async def rest_auto_execute(request: Request) -> JSONResponse:
+@app.get("/api/health")
+async def health_check():
+    """健康检查端点"""
+    return {"status": "ok", "service": "3K RedNote MCP REST API"}
+
+
+@app.post("/api/auto_execute")
+async def rest_auto_execute(request: AutoExecuteRequest):
     """
     REST API 端点：执行自动化采集流程
     
     供 n8n HTTP Request 节点直接调用，无需通过 AI Agent
-    集成到 FastMCP HTTP 服务器，共享端口 9431
     """
     try:
-        # 解析请求体
-        body = await request.json()
-        req = AutoExecuteRequest(**body)
-        
         logger.info("REST API: auto_execute called keyword={} note_limit={}", 
-                    req.keyword, req.note_limit)
+                    request.keyword, request.note_limit)
         
         # 标准化参数值
-        sort_by = _canonical_value("sort_by", req.sort_by)
-        note_type = _canonical_value("note_type", req.note_type)
-        publish_time = _canonical_value("publish_time", req.publish_time)
-        search_scope = _canonical_value("search_scope", req.search_scope)
-        location = _canonical_value("location", req.location)
+        sort_by = _canonical_value("sort_by", request.sort_by)
+        note_type = _canonical_value("note_type", request.note_type)
+        publish_time = _canonical_value("publish_time", request.publish_time)
+        search_scope = _canonical_value("search_scope", request.search_scope)
+        location = _canonical_value("location", request.location)
         
         # 直接调用 automation_service（绕过 MCP 装饰器）
         workflow_request = AutoWorkflowRequest(
-            keyword=req.keyword,
+            keyword=request.keyword,
             sort_by=sort_by,
             note_type=note_type,
             publish_time=publish_time,
             search_scope=search_scope,
             location=location,
-            note_limit=req.note_limit,
-            login_retry_limit=req.login_retry_limit,
-            login_retry_interval=req.login_retry_interval,
-            auto_retry_after_login=req.auto_retry_after_login,
+            note_limit=request.note_limit,
+            login_retry_limit=request.login_retry_limit,
+            login_retry_interval=request.login_retry_interval,
+            auto_retry_after_login=request.auto_retry_after_login,
         )
         
         response = await automation_service.run_auto_workflow(workflow_request)
         
         # 优化输出
         from src.utils.output_cleaner import clean_auto_workflow_response
-        result = clean_auto_workflow_response(response.model_dump(), keyword=req.keyword)
-        return JSONResponse(result)
+        return clean_auto_workflow_response(response.model_dump(), keyword=request.keyword)
         
     except Exception as e:
         logger.error("REST API error: {}", str(e))
-        return JSONResponse({
+        return {
             "success": False,
             "error": str(e),
             "message": f"REST API 调用失败: {str(e)}"
-        }, status_code=500)
+        }
 
 
 # =============================================================================
-# Main Entry Point (简化版 - REST API 已集成到 MCP)
+# Main Entry Point
 # =============================================================================
 
 if __name__ == "__main__":
+    import uvicorn
+    
     transport = os.getenv("FASTMCP_TRANSPORT", "stdio")
-    host = os.getenv("FASTMCP_HOST", "127.0.0.1")
-    port = int(os.getenv("FASTMCP_PORT", "8080"))
-
-    uvicorn_config = {"ws": "websockets"}
+    host = os.getenv("FASTMCP_HOST", "0.0.0.0")
+    port = int(os.getenv("FASTMCP_PORT", "9431"))
     
     if transport == "stdio":
+        # STDIO 模式：直接运行 MCP
         mcp.run(transport=transport)
     else:
-        logger.info("Starting MCP server with integrated REST API on port {}", port)
-        logger.info("REST API endpoints available at:")
+        # HTTP 模式：运行 FastAPI 应用（包含 REST API 和挂载的 MCP）
+        logger.info("Starting combined FastAPI + MCP server on port {}", port)
+        logger.info("REST API endpoints:")
         logger.info("  - GET  http://{}:{}/api/health", host, port)
         logger.info("  - POST http://{}:{}/api/auto_execute", host, port)
+        logger.info("MCP endpoint:")
+        logger.info("  - http://{}:{}/mcp", host, port)
         
-        mcp.run(
-            transport=transport,
-            host=host,
-            port=port,
-            uvicorn_config=uvicorn_config,
-        )
+        uvicorn.run(app, host=host, port=port, log_level="info")
