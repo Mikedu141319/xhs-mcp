@@ -10,6 +10,7 @@ services:
     environment:
       - DATA_DIR=/app/data
       - LOG_DIR=/app/logs
+      - CHROME_HEADLESS=true
     volumes:
       - ./logs:/app/logs
       - ./data/cookies.json:/app/data/cookies.json
