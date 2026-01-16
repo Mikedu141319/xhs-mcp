@@ -26,6 +26,7 @@ services:
     environment:
       - GENERIC_TIMEZONE=Asia/Shanghai
       - TZ=Asia/Shanghai
+      - N8N_SECURE_COOKIE=false
     volumes:
       - n8n_data:/home/node/.n8n
 
