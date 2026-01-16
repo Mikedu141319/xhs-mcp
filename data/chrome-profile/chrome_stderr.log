@@ -1,0 +1,6 @@
+
+DevTools listening on ws://127.0.0.1:9222/devtools/browser/7bf10875-cb34-48be-bbc2-b11c98feac8e
+Created TensorFlow Lite XNNPACK delegate for CPU.
+[27604:19292:0116/011335.336:ERROR:components\device_event_log\device_event_log_impl.cc:198] [01:13:35.336] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: 找不到元素。 (0x490)
+[27604:19120:0116/011335.850:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+[27604:19120:0116/011405.563:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: QUOTA_EXCEEDED

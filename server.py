@@ -333,19 +333,127 @@ async def auto_execute(
 
 
 # =============================================================================
+# REST API Layer (for direct n8n HTTP calls)
+# =============================================================================
+
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from typing import Optional
+import asyncio
+
+# REST API 请求模型
+class AutoExecuteRequest(BaseModel):
+    keyword: str
+    note_limit: int = 5
+    sort_by: str = "comprehensive"
+    note_type: str = "all"
+    publish_time: str = "any"
+    search_scope: str = "all"
+    location: str = "all"
+    login_retry_limit: int = 6
+    login_retry_interval: float = 5.0
+    auto_retry_after_login: bool = True
+
+
+# 创建 FastAPI 应用（与 MCP 共存）
+rest_app = FastAPI(
+    title="3K RedNote MCP - REST API",
+    description="REST API layer for direct HTTP calls from n8n",
+    version="1.0.0"
+)
+
+# 添加 CORS 支持
+rest_app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@rest_app.post("/api/auto_execute")
+async def rest_auto_execute(request: AutoExecuteRequest):
+    """
+    REST API 端点：执行自动化采集流程
+    
+    供 n8n HTTP Request 节点直接调用，无需通过 AI Agent
+    """
+    logger.info("REST API: auto_execute called keyword={} note_limit={}", 
+                request.keyword, request.note_limit)
+    
+    try:
+        # 标准化参数值
+        sort_by = _canonical_value("sort_by", request.sort_by)
+        note_type = _canonical_value("note_type", request.note_type)
+        publish_time = _canonical_value("publish_time", request.publish_time)
+        search_scope = _canonical_value("search_scope", request.search_scope)
+        location = _canonical_value("location", request.location)
+        
+        # 直接调用 automation_service（绕过 MCP 装饰器）
+        workflow_request = AutoWorkflowRequest(
+            keyword=request.keyword,
+            sort_by=sort_by,
+            note_type=note_type,
+            publish_time=publish_time,
+            search_scope=search_scope,
+            location=location,
+            note_limit=request.note_limit,
+            login_retry_limit=request.login_retry_limit,
+            login_retry_interval=request.login_retry_interval,
+            auto_retry_after_login=request.auto_retry_after_login,
+        )
+        
+        response = await automation_service.run_auto_workflow(workflow_request)
+        
+        # 优化输出
+        from src.utils.output_cleaner import clean_auto_workflow_response
+        return clean_auto_workflow_response(response.model_dump(), keyword=request.keyword)
+        
+    except Exception as e:
+        logger.error("REST API error: {}", str(e))
+        return {
+            "success": False,
+            "error": str(e),
+            "message": f"REST API 调用失败: {str(e)}"
+        }
+
+
+@rest_app.get("/api/health")
+async def health_check():
+    """健康检查端点"""
+    return {"status": "ok", "service": "3K RedNote MCP REST API"}
+
+
+# =============================================================================
 # Main Entry Point
 # =============================================================================
 
 if __name__ == "__main__":
+    import uvicorn
+    import threading
+    
     transport = os.getenv("FASTMCP_TRANSPORT", "stdio")
     host = os.getenv("FASTMCP_HOST", "127.0.0.1")
     port = int(os.getenv("FASTMCP_PORT", "8080"))
+    rest_port = int(os.getenv("REST_API_PORT", "9432"))  # REST API 单独端口
 
     uvicorn_config = {"ws": "websockets"}
-
+    
+    # 启动 REST API 服务器（在单独线程中）
+    def run_rest_api():
+        logger.info("Starting REST API server on port {}", rest_port)
+        uvicorn.run(rest_app, host="0.0.0.0", port=rest_port, log_level="info")
+    
     if transport == "stdio":
         mcp.run(transport=transport)
     else:
+        # 同时启动 MCP 和 REST API
+        rest_thread = threading.Thread(target=run_rest_api, daemon=True)
+        rest_thread.start()
+        logger.info("REST API available at http://{}:{}/api/auto_execute", host, rest_port)
+        
         mcp.run(
             transport=transport,
             host=host,

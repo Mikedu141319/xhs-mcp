@@ -1,0 +1,271 @@
+2026-01-16 01:05:06.945 | INFO     | __main__:<module>:91 - Logging initialized at D:\Ai\3k-rednote-mcp\logs
+2026-01-16 01:05:06.947 | INFO     | __main__:<module>:92 - ParameterFilterMiddleware enabled for n8n Agent compatibility
+2026-01-16 01:05:07.035 | INFO     | __main__:run_rest_api:446 - Starting REST API server on port 9432
+2026-01-16 01:05:07.035 | INFO     | __main__:<module>:455 - REST API available at http://0.0.0.0:9432/api/auto_execute
+2026-01-16 01:05:21.280 | INFO     | __main__:rest_auto_execute:383 - REST API: auto_execute called keyword=?? note_limit=2
+2026-01-16 01:05:23.489 | INFO     | src.utils.browser_guard:_launch:104 - Launching managed Chrome instance: C:/Program Files/Google/Chrome/Application/chrome.exe --remote-debugging-port=9222 --remote-debugging-address=127.0.0.1 --user-data-dir=D:\Ai\3k-rednote-mcp\data\chrome-profile --no-first-run --no-default-browser-check --start-maximized --disable-software-rasterizer --disable-blink-features=AutomationControlled --disable-infobars --exclude-switches=enable-automation --use-mock-keychain --remote-allow-origins=* --disable-dev-shm-usage --no-sandbox --disable-gpu --disable-software-rasterizer
+2026-01-16 01:05:24.227 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target 新标签页 (D143F262047B0DA56B2615265BFEC977)
+2026-01-16 01:05:24.439 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target 新标签页 (D143F262047B0DA56B2615265BFEC977)
+2026-01-16 01:05:24.442 | INFO     | src.services.login_service:ensure_login_status:246 - Navigating Chrome target to https://www.xiaohongshu.com/explore
+2026-01-16 01:05:24.636 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target 新标签页 (D143F262047B0DA56B2615265BFEC977)
+2026-01-16 01:05:24.951 | INFO     | src.services.login_service:ensure_login_status:249 - Waiting for ready state...
+2026-01-16 01:05:26.896 | INFO     | src.services.login_service:ensure_login_status:254 - Waiting for feed content to render...
+2026-01-16 01:05:27.106 | INFO     | src.services.login_service:ensure_login_status:271 - Executing DOM probe... (feedCount=24)
+2026-01-16 01:05:27.617 | INFO     | src.utils.cookie_storage:persist_cookies:38 - Persisted 15 cookies to D:\Ai\3k-rednote-mcp\data\cookies.json
+2026-01-16 01:05:40.926 | INFO     | src.services.note_service:on_loading_finished:372 - Loading finished for comment request A60929A6CFCE5FE94F9E83FBC86EA707
+2026-01-16 01:05:41.070 | INFO     | src.services.note_service:on_loading_finished:372 - Loading finished for comment request 2936.993
+2026-01-16 01:05:43.216 | INFO     | src.services.note_service:_build_note_model:1011 - Payload keys for 6964f480000000001a025680: ['xsecToken', 'shareInfo', 'desc', 'user', 'video', 'time', 'lastUpdateTime', 'noteId', 'type', 'title', 'tagList', 'atUserList', 'interactInfo', 'imageList', 'ipLocation']
+2026-01-16 01:05:43.216 | INFO     | src.services.note_service:_build_note_model:1032 - interactInfo for 6964f480000000001a025680: {'likedCount': '39', 'collected': False, 'collectedCount': '6', 'commentCount': '2', 'shareCount': '3', 'followed': False, 'relation': 'none', 'liked': False}
+2026-01-16 01:05:43.217 | INFO     | src.services.note_service:_collect_comments:803 - Scrolling to load comments for 6964f480000000001a025680 (using JS scrollBy)...
+2026-01-16 01:05:46.641 | INFO     | src.services.note_service:_collect_comments:882 - Extracted 2 comments from DOM as fallback
+2026-01-16 01:05:46.642 | INFO     | src.services.note_service:collect_note_details:445 - Returned from _collect_comments with 2 comments
+2026-01-16 01:05:46.642 | INFO     | src.services.note_service:collect_note_details:471 - Appended note 6964f480000000001a025680 to notes list. Total notes: 1
+2026-01-16 01:05:53.302 | INFO     | src.services.note_service:on_loading_finished:372 - Loading finished for comment request ECF066EFDE67E945FE879770FDDFFD03
+2026-01-16 01:05:53.537 | INFO     | src.services.note_service:on_loading_finished:372 - Loading finished for comment request 2936.1084
+2026-01-16 01:05:55.553 | INFO     | src.services.note_service:_build_note_model:1011 - Payload keys for 69199c85000000001b025b5c: ['xsecToken', 'desc', 'imageList', 'tagList', 'time', 'lastUpdateTime', 'shareInfo', 'noteId', 'type', 'title', 'user', 'interactInfo', 'atUserList']
+2026-01-16 01:05:55.553 | INFO     | src.services.note_service:_build_note_model:1032 - interactInfo for 69199c85000000001b025b5c: {'collectedCount': '49', 'commentCount': '10', 'shareCount': '11', 'followed': False, 'relation': 'none', 'liked': False, 'likedCount': '62', 'collected': False}
+2026-01-16 01:05:55.553 | INFO     | src.services.note_service:_collect_comments:803 - Scrolling to load comments for 69199c85000000001b025b5c (using JS scrollBy)...
+2026-01-16 01:05:58.881 | INFO     | src.services.note_service:_collect_comments:882 - Extracted 10 comments from DOM as fallback
+2026-01-16 01:05:58.882 | INFO     | src.services.note_service:collect_note_details:445 - Returned from _collect_comments with 10 comments
+2026-01-16 01:05:58.882 | INFO     | src.services.note_service:collect_note_details:471 - Appended note 69199c85000000001b025b5c to notes list. Total notes: 2
+2026-01-16 01:06:03.827 | INFO     | src.utils.browser_guard:shutdown:157 - Shutting down managed Chrome instance
+2026-01-16 01:06:03.842 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.844 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.844 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.846 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.846 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.847 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.847 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.848 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.848 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.848 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.849 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.849 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.852 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.853 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.853 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.854 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.854 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.855 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.855 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.856 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.856 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.856 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.857 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.857 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.857 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.857 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.858 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.858 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.858 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.859 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.860 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.861 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.861 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.861 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.862 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.862 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.862 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.862 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.863 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.863 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.863 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.863 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.864 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.864 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.865 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.865 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.865 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.866 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.866 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.866 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.866 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.867 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.867 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.867 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.867 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.868 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.868 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.868 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:06:03.868 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:10:15.680 | INFO     | __main__:rest_auto_execute:383 - REST API: auto_execute called keyword=养生 note_limit=2
+2026-01-16 01:10:17.886 | INFO     | src.utils.browser_guard:_launch:104 - Launching managed Chrome instance: C:/Program Files/Google/Chrome/Application/chrome.exe --remote-debugging-port=9222 --remote-debugging-address=127.0.0.1 --user-data-dir=D:\Ai\3k-rednote-mcp\data\chrome-profile --no-first-run --no-default-browser-check --start-maximized --disable-software-rasterizer --disable-blink-features=AutomationControlled --disable-infobars --exclude-switches=enable-automation --use-mock-keychain --remote-allow-origins=* --disable-dev-shm-usage --no-sandbox --disable-gpu --disable-software-rasterizer
+2026-01-16 01:10:18.613 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target 新标签页 (5967916656645161F9DE4C0F516BBA21)
+2026-01-16 01:10:18.815 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target 新标签页 (5967916656645161F9DE4C0F516BBA21)
+2026-01-16 01:10:18.818 | INFO     | src.services.login_service:ensure_login_status:246 - Navigating Chrome target to https://www.xiaohongshu.com/explore
+2026-01-16 01:10:19.004 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target 新标签页 (5967916656645161F9DE4C0F516BBA21)
+2026-01-16 01:10:19.365 | INFO     | src.services.login_service:ensure_login_status:249 - Waiting for ready state...
+2026-01-16 01:10:21.133 | INFO     | src.services.login_service:ensure_login_status:254 - Waiting for feed content to render...
+2026-01-16 01:10:21.364 | INFO     | src.services.login_service:ensure_login_status:271 - Executing DOM probe... (feedCount=24)
+2026-01-16 01:10:21.756 | INFO     | src.utils.cookie_storage:persist_cookies:38 - Persisted 15 cookies to D:\Ai\3k-rednote-mcp\data\cookies.json
+2026-01-16 01:10:41.940 | INFO     | src.services.note_service:on_loading_finished:372 - Loading finished for comment request A4C27C61718686D9F88B089DB2989CB0
+2026-01-16 01:10:42.144 | INFO     | src.services.note_service:on_loading_finished:372 - Loading finished for comment request 28776.1417
+2026-01-16 01:10:44.177 | INFO     | src.services.note_service:_build_note_model:1011 - Payload keys for 69605c62000000000e00e099: ['xsecToken', 'time', 'shareInfo', 'type', 'title', 'tagList', 'atUserList', 'imageList', 'lastUpdateTime', 'ipLocation', 'noteId', 'desc', 'user', 'interactInfo']
+2026-01-16 01:10:44.179 | INFO     | src.services.note_service:_build_note_model:1032 - interactInfo for 69605c62000000000e00e099: {'relation': 'none', 'liked': False, 'likedCount': '2.6万', 'collected': False, 'collectedCount': '2万', 'commentCount': '435', 'shareCount': '3150', 'followed': False}
+2026-01-16 01:10:44.180 | INFO     | src.services.note_service:_extract_note_detail:672 - Note 69605c62000000000e00e099 missing details, attempting DOM fallback...
+2026-01-16 01:10:44.370 | INFO     | src.services.note_service:_collect_comments:803 - Scrolling to load comments for 69605c62000000000e00e099 (using JS scrollBy)...
+2026-01-16 01:10:47.648 | INFO     | src.services.note_service:_collect_comments:882 - Extracted 19 comments from DOM as fallback
+2026-01-16 01:10:47.648 | INFO     | src.services.note_service:collect_note_details:445 - Returned from _collect_comments with 19 comments
+2026-01-16 01:10:47.648 | INFO     | src.services.note_service:collect_note_details:471 - Appended note 69605c62000000000e00e099 to notes list. Total notes: 1
+2026-01-16 01:10:54.239 | INFO     | src.services.note_service:on_loading_finished:372 - Loading finished for comment request 006D8909F204AA2844E3BD7377397A14
+2026-01-16 01:10:54.374 | INFO     | src.services.note_service:on_loading_finished:372 - Loading finished for comment request 28776.1549
+2026-01-16 01:10:56.532 | INFO     | src.services.note_service:_build_note_model:1011 - Payload keys for 69646bb5000000001a02e5b4: ['xsecToken', 'noteId', 'type', 'desc', 'user', 'interactInfo', 'tagList', 'shareInfo', 'title', 'imageList', 'atUserList', 'time', 'lastUpdateTime', 'ipLocation']
+2026-01-16 01:10:56.534 | INFO     | src.services.note_service:_build_note_model:1032 - interactInfo for 69646bb5000000001a02e5b4: {'commentCount': '48', 'shareCount': '858', 'followed': False, 'relation': 'none', 'liked': False, 'likedCount': '4075', 'collected': False, 'collectedCount': '3795'}
+2026-01-16 01:10:56.534 | INFO     | src.services.note_service:_collect_comments:803 - Scrolling to load comments for 69646bb5000000001a02e5b4 (using JS scrollBy)...
+2026-01-16 01:10:59.890 | INFO     | src.services.note_service:_collect_comments:882 - Extracted 17 comments from DOM as fallback
+2026-01-16 01:10:59.891 | INFO     | src.services.note_service:collect_note_details:445 - Returned from _collect_comments with 17 comments
+2026-01-16 01:10:59.891 | INFO     | src.services.note_service:collect_note_details:471 - Appended note 69646bb5000000001a02e5b4 to notes list. Total notes: 2
+2026-01-16 01:11:04.768 | INFO     | src.utils.browser_guard:shutdown:157 - Shutting down managed Chrome instance
+2026-01-16 01:11:04.780 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.780 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.781 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.783 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.783 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.783 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.784 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.784 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.784 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.785 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.785 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.785 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.794 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.794 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.795 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.795 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.795 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.795 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.795 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.796 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.796 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.796 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.796 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.796 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.797 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.798 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.798 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.798 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.798 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.799 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.799 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.799 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.799 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.800 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.800 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.800 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.800 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.800 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.801 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.801 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.801 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.801 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.801 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.801 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.802 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.802 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.802 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.802 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.802 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.802 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.803 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.803 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.803 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.803 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.803 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.803 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.803 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.804 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.804 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.804 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.804 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.804 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:11:04.805 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:13:21.746 | INFO     | __main__:rest_auto_execute:383 - REST API: auto_execute called keyword=养生 note_limit=2
+2026-01-16 01:13:23.938 | INFO     | src.utils.browser_guard:_launch:104 - Launching managed Chrome instance: C:/Program Files/Google/Chrome/Application/chrome.exe --remote-debugging-port=9222 --remote-debugging-address=127.0.0.1 --user-data-dir=D:\Ai\3k-rednote-mcp\data\chrome-profile --no-first-run --no-default-browser-check --start-maximized --disable-software-rasterizer --disable-blink-features=AutomationControlled --disable-infobars --exclude-switches=enable-automation --use-mock-keychain --remote-allow-origins=* --disable-dev-shm-usage --no-sandbox --disable-gpu --disable-software-rasterizer
+2026-01-16 01:13:24.676 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target 新标签页 (0169446B7C28FC3CB1D5354CE4C96CA5)
+2026-01-16 01:13:24.882 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target 新标签页 (0169446B7C28FC3CB1D5354CE4C96CA5)
+2026-01-16 01:13:24.884 | INFO     | src.services.login_service:ensure_login_status:246 - Navigating Chrome target to https://www.xiaohongshu.com/explore
+2026-01-16 01:13:25.091 | WARNING  | src.clients.chrome_devtools:_create_target:79 - Chrome /json/new blocked (405). Reusing existing target 新标签页 (0169446B7C28FC3CB1D5354CE4C96CA5)
+2026-01-16 01:13:25.410 | INFO     | src.services.login_service:ensure_login_status:249 - Waiting for ready state...
+2026-01-16 01:13:27.935 | INFO     | src.services.login_service:ensure_login_status:254 - Waiting for feed content to render...
+2026-01-16 01:13:28.124 | INFO     | src.services.login_service:ensure_login_status:271 - Executing DOM probe... (feedCount=24)
+2026-01-16 01:13:28.521 | INFO     | src.utils.cookie_storage:persist_cookies:38 - Persisted 15 cookies to D:\Ai\3k-rednote-mcp\data\cookies.json
+2026-01-16 01:13:48.496 | INFO     | src.services.note_service:on_loading_finished:372 - Loading finished for comment request 3D6C2CCA3A5C1A7F13C02974EB2908A5
+2026-01-16 01:13:48.680 | INFO     | src.services.note_service:on_loading_finished:372 - Loading finished for comment request 36560.1400
+2026-01-16 01:13:50.697 | INFO     | src.services.note_service:_build_note_model:1011 - Payload keys for 695fe496000000000b00820e: ['xsecToken', 'shareInfo', 'title', 'interactInfo', 'tagList', 'ipLocation', 'noteId', 'time', 'lastUpdateTime', 'user', 'illegalInfo', 'type', 'desc', 'imageList', 'atUserList']
+2026-01-16 01:13:50.698 | INFO     | src.services.note_service:_build_note_model:1032 - interactInfo for 695fe496000000000b00820e: {'collected': False, 'collectedCount': '1907', 'commentCount': '53', 'shareCount': '1410', 'followed': False, 'relation': 'none', 'liked': False, 'likedCount': '1987'}
+2026-01-16 01:13:50.698 | INFO     | src.services.note_service:_collect_comments:803 - Scrolling to load comments for 695fe496000000000b00820e (using JS scrollBy)...
+2026-01-16 01:13:54.034 | INFO     | src.services.note_service:_collect_comments:882 - Extracted 14 comments from DOM as fallback
+2026-01-16 01:13:54.038 | INFO     | src.services.note_service:collect_note_details:445 - Returned from _collect_comments with 14 comments
+2026-01-16 01:13:54.038 | INFO     | src.services.note_service:collect_note_details:471 - Appended note 695fe496000000000b00820e to notes list. Total notes: 1
+2026-01-16 01:14:00.930 | INFO     | src.services.note_service:on_loading_finished:372 - Loading finished for comment request 009409AF46F78CEDD3693F0FDD86BC34
+2026-01-16 01:14:01.109 | INFO     | src.services.note_service:on_loading_finished:372 - Loading finished for comment request 36560.1557
+2026-01-16 01:14:03.234 | INFO     | src.services.note_service:_build_note_model:1011 - Payload keys for 69639771000000000b00a4e5: ['xsecToken', 'noteId', 'type', 'time', 'ipLocation', 'imageList', 'tagList', 'atUserList', 'lastUpdateTime', 'title', 'desc', 'user', 'interactInfo', 'shareInfo']
+2026-01-16 01:14:03.234 | INFO     | src.services.note_service:_build_note_model:1032 - interactInfo for 69639771000000000b00a4e5: {'collected': False, 'collectedCount': '616', 'commentCount': '100', 'shareCount': '271', 'followed': False, 'relation': 'none', 'liked': False, 'likedCount': '1311'}
+2026-01-16 01:14:03.234 | INFO     | src.services.note_service:_collect_comments:803 - Scrolling to load comments for 69639771000000000b00a4e5 (using JS scrollBy)...
+2026-01-16 01:14:06.523 | INFO     | src.services.note_service:_collect_comments:882 - Extracted 19 comments from DOM as fallback
+2026-01-16 01:14:06.523 | INFO     | src.services.note_service:collect_note_details:445 - Returned from _collect_comments with 19 comments
+2026-01-16 01:14:06.524 | INFO     | src.services.note_service:collect_note_details:471 - Appended note 69639771000000000b00a4e5 to notes list. Total notes: 2
+2026-01-16 01:14:10.630 | INFO     | src.utils.browser_guard:shutdown:157 - Shutting down managed Chrome instance
+2026-01-16 01:14:10.644 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.644 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.645 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.646 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.647 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.647 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.647 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.648 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.648 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.663 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.663 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.664 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.664 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.664 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.665 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.665 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.665 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.667 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.668 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.668 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.669 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.669 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.669 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.670 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.670 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.670 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.671 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.671 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.671 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.672 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.672 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.672 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.673 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.673 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.673 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.674 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.674 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.674 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.674 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.675 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.675 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.675 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.675 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.676 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.677 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.677 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.678 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.678 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.678 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.678 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.679 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.679 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.679 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.679 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.680 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.680 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.680 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.681 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.681 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.681 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.682 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.682 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent
+2026-01-16 01:14:10.682 | WARNING  | src.clients.chrome_devtools:_read_loop:162 - Read loop terminated: no close frame received or sent

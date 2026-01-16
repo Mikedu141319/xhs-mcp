@@ -1,0 +1,2 @@
+2026-01-13 07:57:13.265 | INFO     | __main__:<module>:91 - Logging initialized at /app/logs
+2026-01-13 07:57:13.265 | INFO     | __main__:<module>:92 - ParameterFilterMiddleware enabled for n8n Agent compatibility

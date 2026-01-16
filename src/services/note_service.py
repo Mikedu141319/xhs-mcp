@@ -237,8 +237,9 @@ class NoteDetailService:
         self.entry_url = chrome_entry_url()
 
 
-    async def collect_note_details(self, note_limit: int = 5) -> NoteDetailBatchResponse:
-        client = ChromeDevToolsClient(initial_url=self.entry_url)
+    async def collect_note_details(self, note_limit: int = 5, search_url: Optional[str] = None) -> NoteDetailBatchResponse:
+        # Use search_result URL as initial_url to ensure we reuse the search tab, not a blank tab
+        client = ChromeDevToolsClient(initial_url="https://www.xiaohongshu.com/search_result")
         diagnostics: list[str] = [f"note_limit={note_limit}"]
         notes: List[NoteDetail] = []
         visited_ids: set[str] = set()
@@ -267,6 +268,13 @@ class NoteDetailService:
                     window.chrome = { runtime: {} };
                 """
             })
+
+            # If search_url is provided (Browserless environment), navigate to it first
+            if search_url and "search_result" in search_url:
+                diagnostics.append(f"navigating_to_search_url={search_url}")
+                await client.navigate(search_url)
+                await asyncio.sleep(3)  # Wait for page to load
+                await client.wait_for_ready(timeout=15)
 
             ready = await client.wait_for_ready()
             diagnostics.append(f"page_ready={ready}")
@@ -1028,6 +1036,8 @@ class NoteDetailService:
 
 
         interact_info = payload.get("interactInfo") or {}
+        # Debug: Log interactInfo content to diagnose like_count=0 issue
+        logger.info(f"interactInfo for {note_id}: {interact_info}")
 
 
         like_count = _parse_count(interact_info.get("likedCount") or 0)

@@ -85,7 +85,7 @@ class AutomationService:
                         diagnostics=diagnostics,
                     )
 
-            note_response = await self.note_service.collect_note_details(note_limit=request.note_limit)
+            note_response = await self.note_service.collect_note_details(note_limit=request.note_limit, search_url=search_response.page_url)
             diagnostics.extend(note_response.diagnostics)
             if not note_response.success and request.auto_retry_after_login:
                 logger.warning("Note collection failed, retrying after login refresh: {}", note_response.message)
@@ -102,6 +102,7 @@ class AutomationService:
                     if search_response.success:
                         note_response = await self.note_service.collect_note_details(
                             note_limit=request.note_limit,
+                            search_url=search_response.page_url,
                         )
                         diagnostics.extend(note_response.diagnostics)
 
