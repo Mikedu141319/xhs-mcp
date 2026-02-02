@@ -1,15 +1,18 @@
 """FastMCP entry for the chrome-devtools based XiaoHongShu tools."""
 import os
+from typing import List
 from fastmcp import FastMCP
 from fastmcp.server.middleware import Middleware, MiddlewareContext
 
 from src.config import MCP_SERVER_NAME, LOG_DIR
 from src.schemas.automation import AutoWorkflowRequest
 from src.schemas.search import SearchRequest
+from src.schemas.author import AuthorNotesRequest
 from src.services.login_service import LoginService
 from src.services.note_service import NoteDetailService
 from src.services.search_service import SearchService
 from src.services.automation_service import AutomationService
+from src.services.author_service import AuthorService
 from src.utils.browser_guard import BrowserGuard
 from src.utils.logger import configure_logging, logger
 
@@ -30,6 +33,9 @@ TOOL_ALLOWED_PARAMS = {
         "keyword", "sort_by", "note_type", "publish_time",
         "search_scope", "location", "note_limit",
         "login_retry_limit", "login_retry_interval", "auto_retry_after_login"
+    },
+    "collect_author_notes": {
+        "author_url", "skip_note_ids", "note_limit"
     },
 }
 
@@ -95,6 +101,7 @@ browser_guard = BrowserGuard()
 login_service = LoginService(browser_guard=browser_guard)
 search_service = SearchService()
 note_service = NoteDetailService()
+author_service = AuthorService()
 automation_service = AutomationService(
     login_service=login_service,
     search_service=search_service,
@@ -332,6 +339,38 @@ async def auto_execute(
     return clean_auto_workflow_response(response.model_dump(), keyword=keyword)
 
 
+@mcp.tool()
+async def collect_author_notes(
+    author_url: str,
+    skip_note_ids: List[str] = None,
+    note_limit: int = 50,
+) -> dict:
+    """
+    Collect notes from a specific author's profile page.
+    
+    Args:
+        author_url: The author's profile URL (e.g., https://www.xiaohongshu.com/user/profile/{id})
+        skip_note_ids: List of note IDs to skip (already collected in previous batches)
+        note_limit: Maximum number of notes to collect in this batch
+    
+    Returns:
+        Collection result with notes, progress info, and diagnostics
+    """
+    if skip_note_ids is None:
+        skip_note_ids = []
+    
+    logger.info(
+        "collect_author_notes called author_url={} note_limit={} skip_count={}",
+        author_url, note_limit, len(skip_note_ids)
+    )
+    response = await author_service.collect_author_notes(
+        author_url=author_url,
+        skip_note_ids=skip_note_ids,
+        note_limit=note_limit,
+    )
+    return response.model_dump()
+
+
 # =============================================================================
 # REST API Layer (FastAPI with MCP mounted)
 # =============================================================================
@@ -352,6 +391,13 @@ class AutoExecuteRequest(BaseModel):
     login_retry_limit: int = 6
     login_retry_interval: float = 5.0
     auto_retry_after_login: bool = True
+
+
+class CollectAuthorNotesRequest(BaseModel):
+    """REST API请求模型：按作者采集笔记"""
+    author_url: str
+    skip_note_ids: List[str] = []
+    note_limit: int = 50
 
 
 # =============================================================================
@@ -435,6 +481,41 @@ async def rest_auto_execute(request: AutoExecuteRequest):
         }
 
 
+@app.post("/api/collect_author_notes")
+async def rest_collect_author_notes(request: CollectAuthorNotesRequest):
+    """
+    REST API 端点：按作者采集笔记
+    
+    根据作者主页URL采集该作者发布的笔记。支持分批采集和去重。
+    
+    参数:
+        author_url: 作者主页链接
+        skip_note_ids: 已采集的笔记ID列表（用于去重）
+        note_limit: 本批最多采集数量
+    """
+    try:
+        logger.info(
+            "REST API: collect_author_notes called author_url={} note_limit={} skip_count={}",
+            request.author_url, request.note_limit, len(request.skip_note_ids)
+        )
+        
+        response = await author_service.collect_author_notes(
+            author_url=request.author_url,
+            skip_note_ids=request.skip_note_ids,
+            note_limit=request.note_limit,
+        )
+        
+        return response.model_dump()
+        
+    except Exception as e:
+        logger.error("REST API collect_author_notes error: {}", str(e))
+        return {
+            "success": False,
+            "error": str(e),
+            "message": f"按作者采集失败: {str(e)}"
+        }
+
+
 # =============================================================================
 # Main Entry Point
 # =============================================================================
@@ -455,6 +536,7 @@ if __name__ == "__main__":
         logger.info("REST API endpoints:")
         logger.info("  - GET  http://{}:{}/api/health", host, port)
         logger.info("  - POST http://{}:{}/api/auto_execute", host, port)
+        logger.info("  - POST http://{}:{}/api/collect_author_notes", host, port)
         logger.info("MCP endpoint:")
         logger.info("  - http://{}:{}/mcp", host, port)
         
