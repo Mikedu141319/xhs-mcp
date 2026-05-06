@@ -8,11 +8,13 @@ from src.config import MCP_SERVER_NAME, LOG_DIR
 from src.schemas.automation import AutoWorkflowRequest
 from src.schemas.search import SearchRequest
 from src.schemas.author import AuthorNotesRequest
+from src.schemas.note_link import NoteLinkRequest
 from src.services.login_service import LoginService
 from src.services.note_service import NoteDetailService
 from src.services.search_service import SearchService
 from src.services.automation_service import AutomationService
 from src.services.author_service import AuthorService
+from src.services.note_link_service import NoteLinkService
 from src.utils.browser_guard import BrowserGuard
 from src.utils.logger import configure_logging, logger
 
@@ -35,7 +37,10 @@ TOOL_ALLOWED_PARAMS = {
         "login_retry_limit", "login_retry_interval", "auto_retry_after_login"
     },
     "collect_author_notes": {
-        "author_url", "skip_note_ids", "note_limit"
+        "author_url", "skip_note_ids", "note_limit", "comment_limit"
+    },
+    "collect_note_by_link": {
+        "note_url", "comment_limit"
     },
 }
 
@@ -101,7 +106,8 @@ browser_guard = BrowserGuard()
 login_service = LoginService(browser_guard=browser_guard)
 search_service = SearchService()
 note_service = NoteDetailService()
-author_service = AuthorService()
+author_service = AuthorService(browser_guard=browser_guard)
+note_link_service = NoteLinkService(browser_guard=browser_guard)
 automation_service = AutomationService(
     login_service=login_service,
     search_service=search_service,
@@ -344,12 +350,13 @@ async def collect_author_notes(
     author_url: str,
     skip_note_ids: List[str] = None,
     note_limit: int = 50,
+    comment_limit: int = 10,
 ) -> dict:
     """
-    Collect notes from a specific author's profile page.
+    Collect notes from a specific author profile page.
     
     Args:
-        author_url: The author's profile URL (e.g., https://www.xiaohongshu.com/user/profile/{id})
+        author_url: The author profile URL (e.g., https://www.xiaohongshu.com/user/profile/{id})
         skip_note_ids: List of note IDs to skip (already collected in previous batches)
         note_limit: Maximum number of notes to collect in this batch
     
@@ -367,6 +374,37 @@ async def collect_author_notes(
         author_url=author_url,
         skip_note_ids=skip_note_ids,
         note_limit=note_limit,
+        comment_limit=comment_limit,
+    )
+    return response.model_dump()
+
+
+@mcp.tool()
+async def collect_note_by_link(
+    note_url: str,
+    comment_limit: int = 10,
+) -> dict:
+    """
+    Collect all information from a single Xiaohongshu note by its link.
+    
+    Supports mobile share short links (e.g. http://xhslink.com/xxx) and
+    full note URLs. Extracts title, content, images, videos, live photos,
+    tags, engagement metrics (likes, collects, shares), and comments.
+    
+    Args:
+        note_url: The note URL (supports short links and full URLs)
+        comment_limit: Maximum number of comments to collect (default 10)
+    
+    Returns:
+        Note detail with all extracted information
+    """
+    logger.info(
+        "collect_note_by_link called note_url={} comment_limit={}",
+        note_url, comment_limit
+    )
+    response = await note_link_service.collect_note_by_link(
+        note_url=note_url,
+        comment_limit=comment_limit,
     )
     return response.model_dump()
 
@@ -395,9 +433,19 @@ class AutoExecuteRequest(BaseModel):
 
 class CollectAuthorNotesRequest(BaseModel):
     """REST API请求模型：按作者采集笔记"""
-    author_url: str
+    author_url: str = None  # 可选：直接的作者主页URL
+    xhs_id: str = None  # 可选：小红书号，通过搜索方式进入博主页面（推荐！更接近人工操作）
     skip_note_ids: List[str] = []
     note_limit: int = 50
+    comment_limit: int = 10
+    collection_update_time: str = None
+    initial_scan_limit: int = 10
+
+
+class CollectNoteLinkRequest(BaseModel):
+    """REST API请求模型：通过笔记链接采集"""
+    note_url: str  # 笔记链接（支持手机分享短链和完整链接）
+    comment_limit: int = 10  # 评论数量上限
 
 
 # =============================================================================
@@ -432,6 +480,126 @@ app.mount("/mcp", mcp_app)
 async def health_check():
     """健康检查端点"""
     return {"status": "ok", "service": "3K RedNote MCP REST API"}
+
+@app.post("/api/reload_cookies")
+async def reload_cookies_endpoint():
+    """
+    热重载 Cookies：重新从 data/cookies.json 读取，清理 Chrome profile 缓存，
+    并关闭当前 Chrome 进程，下次采集时会用新 cookies 启动。
+    """
+    from src.utils.cookie_storage import load_cookies
+    from src.config import COOKIES_FILE, CHROME_USER_DATA_DIR
+    from pathlib import Path
+    import shutil
+
+    result = {"steps": []}
+
+    # 1. 验证 cookies 文件
+    payload = load_cookies()
+    if not payload:
+        return {
+            "success": False,
+            "message": "cookies.json 文件不存在或格式错误",
+            "cookies_path": str(COOKIES_FILE.resolve()),
+        }
+
+    cookie_count = len(payload.get("cookies", []))
+    exported_at = payload.get("exported_at", "unknown")
+    result["steps"].append(f"cookies_loaded={cookie_count}, exported_at={exported_at}")
+
+    # 2. 检查关键 cookie 是否存在
+    cookie_names = {c.get("name") for c in payload.get("cookies", [])}
+    critical_cookies = {"web_session", "a1", "webId"}
+    missing = critical_cookies - cookie_names
+    if missing:
+        result["steps"].append(f"WARNING: missing critical cookies: {missing}")
+    else:
+        result["steps"].append("all critical cookies present (web_session, a1, webId)")
+
+    # 3. 清理 Chrome profile 缓存（避免旧 session 干扰）
+    profile_dir = Path(CHROME_USER_DATA_DIR)
+    cache_dirs = ["Default/Cache", "Default/Code Cache", "Default/GPUCache", "Default/Service Worker"]
+    cleaned = []
+    for subdir in cache_dirs:
+        target = profile_dir / subdir
+        if target.exists():
+            try:
+                shutil.rmtree(target, ignore_errors=True)
+                cleaned.append(subdir)
+            except Exception as e:
+                result["steps"].append(f"cache_clean_error={subdir}: {e}")
+    if cleaned:
+        result["steps"].append(f"cleaned_cache_dirs={cleaned}")
+    else:
+        result["steps"].append("no_cache_dirs_to_clean")
+
+    # 4. 关闭当前 Chrome 进程（下次采集会自动重启并注入新 cookies）
+    try:
+        await browser_guard.shutdown()
+        result["steps"].append("chrome_shutdown=success")
+    except Exception as e:
+        result["steps"].append(f"chrome_shutdown_error={e}")
+
+    result["success"] = True
+    result["message"] = f"Cookies 热重载完成：{cookie_count} 个 cookies 已就绪，Chrome 已关闭，下次采集将使用新 cookies"
+    result["cookie_count"] = cookie_count
+    result["exported_at"] = exported_at
+    return result
+
+
+@app.get("/api/diagnose")
+async def diagnose_endpoint():
+    """
+    诊断端点：快速检查服务状态、cookies、Chrome 连接等。
+    """
+    from src.utils.cookie_storage import load_cookies
+    from src.config import COOKIES_FILE, CHROME_USER_DATA_DIR, CHROME_REMOTE_URL
+    from pathlib import Path
+    import httpx as _httpx
+
+    diag = {}
+
+    # 1. Cookies 状态
+    payload = load_cookies()
+    if payload:
+        cookies = payload.get("cookies", [])
+        cookie_names = [c.get("name") for c in cookies]
+        diag["cookies"] = {
+            "file": str(COOKIES_FILE.resolve()),
+            "count": len(cookies),
+            "exported_at": payload.get("exported_at"),
+            "has_web_session": "web_session" in cookie_names,
+            "has_a1": "a1" in cookie_names,
+            "has_webId": "webId" in cookie_names,
+            "names": cookie_names,
+        }
+    else:
+        diag["cookies"] = {"error": "cookies.json missing or invalid", "file": str(COOKIES_FILE.resolve())}
+
+    # 2. Chrome 状态
+    try:
+        async with _httpx.AsyncClient(trust_env=False) as client:
+            resp = await client.get(f"{CHROME_REMOTE_URL}/json/version", timeout=3)
+        diag["chrome"] = {"status": "online", "info": resp.json()}
+    except Exception as e:
+        diag["chrome"] = {"status": "offline", "error": str(e)}
+
+    # 3. Chrome profile 目录
+    profile_dir = Path(CHROME_USER_DATA_DIR)
+    diag["chrome_profile"] = {
+        "path": str(profile_dir.resolve()),
+        "exists": profile_dir.exists(),
+    }
+
+    # 4. 环境变量
+    diag["env"] = {
+        "DEBUG_SCREENSHOT": os.environ.get("DEBUG_SCREENSHOT", "not set"),
+        "CHROME_HEADLESS": os.environ.get("CHROME_HEADLESS", "not set"),
+        "DATA_DIR": os.environ.get("DATA_DIR", "not set"),
+    }
+
+    return diag
+
 
 
 @app.post("/api/auto_execute")
@@ -494,18 +662,49 @@ async def rest_collect_author_notes(request: CollectAuthorNotesRequest):
         note_limit: 本批最多采集数量
     """
     try:
+        # Check for Conditional Collection Logic
+        current_limit = request.note_limit
+        
+        if request.collection_update_time:
+            from datetime import datetime
+            try:
+                today = datetime.now().strftime("%Y-%m-%d")
+                # If collection time is NOT today (meaning it's a new day or catch-up),
+                # restrict the limit to initial_scan_limit (default 10)
+                if request.collection_update_time != today:
+                    logger.info(f"Catch-up Mode: Last update {request.collection_update_time} != Today {today}. Enforcing limit {request.initial_scan_limit}")
+                    current_limit = request.initial_scan_limit
+            except Exception as e:
+                logger.warning(f"Date comparison failed: {e}")
+
         logger.info(
-            "REST API: collect_author_notes called author_url={} note_limit={} skip_count={}",
-            request.author_url, request.note_limit, len(request.skip_note_ids)
+            "REST API: collect_author_notes called author_url={} xhs_id={} note_limit={} (orig={}) skip_count={}",
+            request.author_url, request.xhs_id, current_limit, request.note_limit, len(request.skip_note_ids)
         )
         
-        response = await author_service.collect_author_notes(
-            author_url=request.author_url,
-            skip_note_ids=request.skip_note_ids,
-            note_limit=request.note_limit,
-        )
-        
-        return response.model_dump()
+        import asyncio as _asyncio
+        try:
+            # Hard 15-min timeout: actually interrupts mid-execution (unlike deadline loop check).
+            # Chrome is still shut down via the finally block in collect_author_notes.
+            response = await _asyncio.wait_for(
+                author_service.collect_author_notes(
+                    author_url=request.author_url,
+                    xhs_id=request.xhs_id,
+                    skip_note_ids=request.skip_note_ids,
+                    note_limit=current_limit,
+                    comment_limit=request.comment_limit,
+                ),
+                timeout=900.0,  # 15 minutes (increased from 9 min to handle slow pages)
+            )
+            return response.model_dump()
+        except _asyncio.TimeoutError:
+            logger.warning("collect_author_notes reached 15-min hard timeout. Chrome cleaned up by finally block.")
+            return {
+                "success": False,
+                "timed_out": True,
+                "message": "采集超时（15分钟限制），请检查服务器性能或减少 note_limit",
+                "notes": [],
+            }
         
     except Exception as e:
         logger.error("REST API collect_author_notes error: {}", str(e))
@@ -513,6 +712,53 @@ async def rest_collect_author_notes(request: CollectAuthorNotesRequest):
             "success": False,
             "error": str(e),
             "message": f"按作者采集失败: {str(e)}"
+        }
+
+
+@app.post("/api/collect_note_by_link")
+async def rest_collect_note_by_link(request: CollectNoteLinkRequest):
+    """
+    REST API 端点：通过笔记链接采集笔记信息
+    
+    支持手机分享短链（如 http://xhslink.com/xxx）和完整笔记链接。
+    返回笔记的所有信息：标题、正文、图片、视频、Live图、标签、
+    互动数据（点赞、收藏、转发）以及评论内容。
+    
+    参数:
+        note_url: 笔记链接
+        comment_limit: 评论数量上限（默认10条）
+    """
+    try:
+        logger.info(
+            "REST API: collect_note_by_link called note_url={} comment_limit={}",
+            request.note_url, request.comment_limit
+        )
+
+        import asyncio as _asyncio
+        try:
+            response = await _asyncio.wait_for(
+                note_link_service.collect_note_by_link(
+                    note_url=request.note_url,
+                    comment_limit=request.comment_limit,
+                ),
+                timeout=180.0,  # 3 minutes (single note should be fast)
+            )
+            return response.model_dump()
+        except _asyncio.TimeoutError:
+            logger.warning("collect_note_by_link reached 3-min hard timeout.")
+            return {
+                "success": False,
+                "timed_out": True,
+                "message": "采集超时（3分钟限制），请检查链接是否有效",
+                "note": None,
+            }
+
+    except Exception as e:
+        logger.error("REST API collect_note_by_link error: {}", str(e))
+        return {
+            "success": False,
+            "error": str(e),
+            "message": f"笔记链接采集失败: {str(e)}"
         }
 
 
@@ -537,6 +783,7 @@ if __name__ == "__main__":
         logger.info("  - GET  http://{}:{}/api/health", host, port)
         logger.info("  - POST http://{}:{}/api/auto_execute", host, port)
         logger.info("  - POST http://{}:{}/api/collect_author_notes", host, port)
+        logger.info("  - POST http://{}:{}/api/collect_note_by_link", host, port)
         logger.info("MCP endpoint:")
         logger.info("  - http://{}:{}/mcp", host, port)
         

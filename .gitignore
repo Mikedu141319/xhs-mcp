@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Chrome Profile Data (浏览器缓存和配置)
+data/chrome-profile/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Screenshots and debug files
+screenshots/
+debug/
+
+# Docker
+.dockerignore
+
+# Project specific
+cookies.json
+*.pma
+*.dat
